@@ -1,0 +1,41 @@
+name: fitness_app
+description: fitnessApp!
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# ... Other configuration ...
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  animated_splash_screen: ^1.3.0
+  page_transition: ^2.0.9
+  flutter_native_splash: ^2.3.2
+  google_fonts: ^5.1.0
+  table_calendar: ^3.0.9
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/splash.png
+
+  # ... Other Flutter configuration ...
+
+flutter_native_splash:
+  image: images/splash.png
+  color: "e6effe"
+  fullscreen: true
+  android: true
+  ios: true
