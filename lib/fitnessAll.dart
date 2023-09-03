@@ -8,6 +8,7 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'palette.dart';
 import 'calendar.dart';
+import 'package:intl/date_symbol_data_local.dart';
 class mainScreen extends StatefulWidget {
   const mainScreen({Key? key}) : super(key: key);
   @override
@@ -23,6 +24,11 @@ class _LoginScreenState extends State<mainScreen> {
     setState(() {
       currentDate = newDate;
     });
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    initializeDateFormatting(Localizations.localeOf(context).languageCode);
   }
   @override
   Widget build(BuildContext context) {
@@ -90,8 +96,11 @@ class _LoginScreenState extends State<mainScreen> {
             ),
           ),
           body: TabBarView(
+            // TabBarView -> 그 탭을 누를시,보여주는 화면인거임
             children: [
-                leftArrowScreen(),
+              leftArrowScreen(),
+              calendScreen(dateTime: DateTime.now()),
+              rightArrowsScreen(),
             ],
           ),
         ),
@@ -101,6 +110,7 @@ class _LoginScreenState extends State<mainScreen> {
 }
 class leftArrowScreen extends StatefulWidget {
   const leftArrowScreen({super.key});
+
   @override
   State<leftArrowScreen> createState() => _leftArrowScreenState();
 }
@@ -112,3 +122,16 @@ class _leftArrowScreenState extends State<leftArrowScreen> {
   }
 }
 
+class rightArrowsScreen extends StatefulWidget {
+  const rightArrowsScreen({super.key});
+
+  @override
+  State<rightArrowsScreen> createState() => _rightArrowsScreenState();
+}
+
+class _rightArrowsScreenState extends State<rightArrowsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

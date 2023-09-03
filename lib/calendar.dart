@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-class calendScreen extends StatefulWidget {
-  final DateTime dateTime;
-  calendScreen({required this.dateTime});
+import 'package:intl/date_symbol_data_local.dart';
 
+class calendScreen extends StatefulWidget {
+  DateTime dateTime = DateTime.now();
+  calendScreen({required this.dateTime});
   @override
   State<calendScreen> createState() => _calendScreenState();
 }
@@ -29,29 +30,28 @@ class _calendScreenState extends State<calendScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('protected Calender')),
-      body: content(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: content(),
     );
   }
   Widget content() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Text('Selected Day = ${formattedDateToString(today)}'),
-          TableCalendar(
-            locale: 'ja_JP',
-            rowHeight: 43,
-            headerStyle: const HeaderStyle(formatButtonVisible: false,titleCentered: true),
-            availableGestures: AvailableGestures.all,
-            selectedDayPredicate: (day) => isSameDay(day,today),
-            focusedDay: today,
-            firstDay: DateTime.utc(2023,8,22),
-            lastDay: DateTime.utc(2099,3,14),
-            onDaySelected: _onDaySelection,
-          ),
-      ],
+      child: SingleChildScrollView(
+        child: Container(
+            child: TableCalendar(
+              locale: 'ja_JP',
+              rowHeight: 70,
+              headerStyle: const HeaderStyle(formatButtonVisible: false,titleCentered: true),
+              availableGestures: AvailableGestures.all,
+              selectedDayPredicate: (day) => isSameDay(day,today),
+              focusedDay: today,
+              firstDay: DateTime.utc(2023,8,22),
+              lastDay: DateTime.utc(2099,3,14),
+              onDaySelected: _onDaySelection,
+            ),
+        ),
       ),
     );
   }
