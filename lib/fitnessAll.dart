@@ -1,4 +1,5 @@
-import 'dart:js_interop';
+
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'mealdetails.dart';
@@ -17,61 +18,80 @@ class _LoginScreenState extends State<mainScreen> {
   int indexNum = -1;
   Color enableColor = const Color.fromRGBO(128, 128, 128,1.0);
   Color disableColor = const Color.fromRGBO(0, 0, 0, 1.0);
-
+  DateTime currentDate = DateTime.now(); // Today
+  void updateDate(DateTime newDate) {
+    setState(() {
+      currentDate = newDate;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          titleSpacing: 0.0,
-          backgroundColor: Colors.white,
-          leading: TextButton(onPressed: () {
-              setState(() {
-                indexNum = 0;
-              });
-              Navigator.push(context,MaterialPageRoute(builder: (context) => const mainScreen()));
-            },
-            child: Text('기록',style: TextStyle(color: indexNum == 0 ? enableColor : disableColor ),),
-          ),
-          title: Row(
-            children: <Widget> [
-              TextButton(onPressed: () {
+      home: DefaultTabController(
+        initialIndex: 1,
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: false,
+            titleSpacing: 0.0,
+            backgroundColor: Colors.white,
+            leading: TextButton(onPressed: () {
                 setState(() {
-                  indexNum = 1;
+                  indexNum = 0;
                 });
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const statisticsScreen()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => const mainScreen()));
               },
-                  child: Text('통계',style: TextStyle(color: indexNum == 1 ? enableColor : disableColor),),
-              ),
-              const SizedBox(width: 5),
-              TextButton(onPressed: () {
-                setState(() {
-                  indexNum = 2;
-                });
-                Navigator.push(context,MaterialPageRoute(builder: (context) => const mealScreen()));
-              },
-                  child: Text('식단 상세',style: TextStyle(color: indexNum == 2 ? enableColor : disableColor),)),
+              child: Text('記録',style: TextStyle(color: indexNum == 0 ? enableColor : disableColor ),),
+            ),
+            title: Row(
+              children: <Widget> [
+                TextButton(onPressed: () {
+                  setState(() {
+                    indexNum = 1;
+                  });
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const statisticsScreen()));
+                },
+                    child: Text('統計',style: TextStyle(color: indexNum == 1 ? enableColor : disableColor),),
+                ),
+                const SizedBox(width: 5),
+                TextButton(onPressed: () {
+                  setState(() {
+                    indexNum = 2;
+                  });
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const mealScreen()));
+                },
+                    child: Text('今日の食事',style: TextStyle(color: indexNum == 2 ? enableColor : disableColor),)),
+                ],
+            ),
+            bottom: TabBar(
+              indicatorColor: Colors.black,
+              labelColor: Colors.lightBlue,
+              unselectedLabelColor: Colors.black,
+              tabs: <Widget> [
+                Tab(
+                    icon: Icon(Icons.keyboard_arrow_left),
+                ),
+                Tab(
+                  icon: Row(
+                    children: [
+                      Icon(Icons.calendar_month),
+                      SizedBox(width: 5),
+                      Text(DateFormat('MM-dd').format(currentDate),
+                      style: TextStyle(color: Colors.black)),
+                    ],
+                  ),
+                ),
+                Tab (
+                  icon: Icon(Icons.keyboard_arrow_right),
+                ),
               ],
+            ),
           ),
-          bottom: TabBar(
-            tabs: <Widget> [
-              Tab(
-                  icon: const Icon(Icons.arrow_left),
-                ),
-              Tab(
-                icon: const Icon(Icons.sentiment_satisfied),
-                child: TextButton(
-                  onPressed: () {
-                    calendScreen();
-                  },
-                  child: Text('$}')
-                ),
-              ),
-              Tab(
-                icon: const Icon(Icons.arrow_right),
-              )
+          body: TabBarView(
+            children: [
+                leftArrowScreen(),
             ],
           ),
         ),
@@ -79,3 +99,16 @@ class _LoginScreenState extends State<mainScreen> {
     );
   }
 }
+class leftArrowScreen extends StatefulWidget {
+  const leftArrowScreen({super.key});
+  @override
+  State<leftArrowScreen> createState() => _leftArrowScreenState();
+}
+
+class _leftArrowScreenState extends State<leftArrowScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+

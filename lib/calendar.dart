@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/intl.dart';
 class calendScreen extends StatefulWidget {
-  const calendScreen({Key? key}) : super(key: key);
+  final DateTime dateTime;
+  calendScreen({required this.dateTime});
+
   @override
   State<calendScreen> createState() => _calendScreenState();
 }
@@ -12,6 +15,17 @@ class _calendScreenState extends State<calendScreen> {
     setState(() {
       today = day;
     });
+  }
+  // before Day
+  DateTime getPreviousDate(DateTime date) {
+    return date.subtract(Duration(days: 1));
+  }
+  // Next Day
+  DateTime getNextDate(DateTime date) {
+    return date.add(Duration(days: 1));
+  }
+  String formattedDateToString(DateTime date) {
+    return DateFormat('yy-MM-dd').format(date);
   }
   @override
   Widget build(BuildContext context) {
@@ -25,7 +39,7 @@ class _calendScreenState extends State<calendScreen> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Text('Selected Day = ${today.toString().split(" ")[0]}'),
+          Text('Selected Day = ${formattedDateToString(today)}'),
           TableCalendar(
             locale: 'ja_JP',
             rowHeight: 43,

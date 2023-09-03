@@ -7,7 +7,7 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: splashScreen(),
   ),
@@ -20,7 +20,7 @@ class splashScreen extends StatelessWidget {
     return AnimatedSplashScreen(
       duration: 3000,
       splash: Image.asset('images/splash.png'),
-      nextScreen: mainScreen(),
+      nextScreen: const mainScreen(),
       splashTransition: SplashTransition.fadeTransition,
       backgroundColor: Colors.white,
     );
